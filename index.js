@@ -1,13 +1,19 @@
 import express from 'express';
+import path from 'path';
 import 'dotenv/config';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import userRoutes from './routes/users.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3600;
 
 app.use(express.json());
-app.use(express.static('./public'));
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
+app.use('/', express.static('public'));
+
 app.use('/api/users', userRoutes);
 
 const connectDB = async () => {
