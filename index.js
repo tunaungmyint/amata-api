@@ -16,6 +16,14 @@ app.use('/', express.static('public'));
 
 app.use('/api/users', userRoutes);
 
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 const connectDB = async () => {
   try {
     mongoose.connect(process.env.DB_CONNECTION);
